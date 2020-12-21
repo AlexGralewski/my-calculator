@@ -13,6 +13,7 @@ class Calculator extends Component {
     this.handleNumberClick = this.handleNumberClick.bind(this)
     this.handleResetClick = this.handleResetClick.bind(this)
     this.handleBackspaceClick = this.handleBackspaceClick(this)
+    this.handlePositiveNegativeNumberChange = this.handlePositiveNegativeNumberChange.bind(this)
   }
 
   handleChange(event) {
@@ -35,32 +36,83 @@ class Calculator extends Component {
   handleOperationSignClick(event) {
     event.preventDefault()
     const { name, value } = event.target
+    console.log("clicked")
+
     this.setState(prevState => {
-      return ({
-        memory: prevState.result,
-        result: '0',
-        [name]: value
-      })
+      if (value === "2√") {
+        return({
+          result: Math.sqrt(parseFloat(prevState.result)),
+          memory: ""
+          })
+      } else if (value === "3√") {
+        return({
+          result: Math.cbrt(parseFloat(prevState.result)),
+          memory: ""
+          })
+      } else if (value === "1/n") {
+        return({
+          result: 1 / prevState.result,
+          memory: ""
+          })
+      } else {
+        return ({
+          memory: prevState.result,
+          result: '0',
+          [name]: value
+        })
+      }
+        
     })
   }
-
 
   handleEqualsSignClick(event) {
     event.preventDefault()
 
     this.setState(prevState => {
       if (this.state.operation === "+") {
-
         return ({
           result: parseFloat(prevState.result) + parseFloat(this.state.memory),
-          memory: ""
+          memory: "",
+          operation: ""
+        })
+      } else if (this.state.operation === "-") {
+        return ({
+          result: parseFloat(prevState.memory) - parseFloat(this.state.result),
+          memory: "",
+          operation: ""
+        })
+      } else if (this.state.operation === "x") {
+        return ({
+          result: parseFloat(prevState.result) * parseFloat(this.state.memory),
+          memory: "",
+          operation: ""
+        })
+      } else if (this.state.operation === "/") {
+        return ({
+          result: parseFloat(prevState.memory) / parseFloat(this.state.result),
+          memory: "",
+          operation: ""
+        })
+      } else if (this.state.operation === "^") {
+        return ({
+          result: parseFloat(prevState.memory) ** parseFloat(this.state.result),
+          memory: "",
+          operation: ""
         })
       }
     })
   }
 
-  handleResetClick() {
+  handlePositiveNegativeNumberChange() {
+    this.setState(prevState => {
+      return({
+        result: -prevState.result
+      })
+    })
+  }
 
+
+  handleResetClick() {
     this.setState({
       result: "0",
       memory: "0",
@@ -68,8 +120,7 @@ class Calculator extends Component {
     })
   }
 
-  handleBackspaceClick() {
-
+  handleBackspaceClick(event) {
     this.setState(prevState => {
       return({
         result: prevState.result.pop()
@@ -84,15 +135,12 @@ class Calculator extends Component {
       <div>
         <form className="calculator">
           <div className="display">
-            <input
-              className="result"
-              type="number"
-              name="result"
-              value={result}
-              onChange={this.handleChange}
-              />
+            <div className="result">
+              {result}
+            </div>
+
             <div className="memory">
-              {memory}
+              {memory} {operation}
             </div>
           </div>
           <button className="" onClick={this.handleResetClick}>C</button>
@@ -104,26 +152,25 @@ class Calculator extends Component {
               type="button"
               name="operation"
               value="^"
-              onClick={this.handleSubmit} />
+              onClick={this.handleOperationSignClick} />
             <input
               className="operation"
               type="button"
               name="operation"
-              value="%"
-              onClick={this.handleSubmit} />
+              value="2√"
+              onClick={this.handleOperationSignClick} />
             <input
               className="operation"
               type="button"
               name="operation"
-              value="1/x"
-              onClick={this.handleSubmit} />
+              value="1/n"
+              onClick={this.handleOperationSignClick} />
             <input
               className="operation"
               type="button"
               name="operation"
               value="/"
-              onClick={this.handleSubmit} />
-
+              onClick={this.handleOperationSignClick} />
           </div>
 
           <div className="bottom-part">
@@ -189,7 +236,7 @@ class Calculator extends Component {
                 type="button"
                 name="result"
                 value="+/-"
-                onClick={this.handleNumberClick} />
+                onClick={this.handlePositiveNegativeNumberChange} />
               <input
                 className="number-button"
                 type="button"
