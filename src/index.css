@@ -73,7 +73,7 @@ body, .root {
   width: 400px;
 }
 
-.calculator .top-part input {
+.calculator .top-part input, .calculator .top-part button {
   width: 25%;
   height: 125px;
   font-size: 20px;
