@@ -38,15 +38,15 @@ body, .root {
           align-items: center;
   margin: 50px;
   padding: 50px;
-  border-radius: 5px;
-  background-color: black;
+  border-radius: 40px;
+  background-color: #202330;
   color: white;
 }
 
 .calculator .display {
   width: 400px;
   padding: 20px 20px;
-  margin: 20px;
+  margin: 50px;
   border-radius: 10px;
   display: -webkit-box;
   display: -ms-flexbox;

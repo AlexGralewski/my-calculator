@@ -24,10 +24,22 @@ handleChange(event) {
 handleNumberClick(event) {
   const { name, value } = event.target
   this.setState(prevState => {
-    return ({
-      [name]: prevState.result + value
+    if (value === '.') {
+      console.log("clicked")
+      return ({
+        [name]: `${prevState.result}.`
+      })
     }
-    )
+    if (prevState.result == '0') {
+      return ({
+        [name]: value
+      })
+    } else {
+      return ({
+        [name]: prevState.result + value
+      }
+      )
+    }
   })
 }
 
@@ -66,7 +78,8 @@ render() {
               type="button"
               name="result"
               value="7"
-              onClick={this.handleNumberClick} />
+              onClick={this.handleNumberClick} 
+              />
 
             <input
               className="number-button"
