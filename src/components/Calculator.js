@@ -4,18 +4,18 @@ class Calculator extends Component {
   constructor() {
     super()
     this.state = {
-      result: "0",
+      result: 0,
       operationInput: "",
       operation: "",
-      memory: "0"
+      memory: undefined
     }
     this.handleEqualsSignClick = this.handleEqualsSignClick.bind(this)
     this.handleOperationSignClick = this.handleOperationSignClick.bind(this)
     this.handleNumberClick = this.handleNumberClick.bind(this)
     this.handleResetClick = this.handleResetClick.bind(this)
-    this.handleBackspaceClick = this.handleBackspaceClick(this)
+    this.handleDelClick = this.handleDelClick(this)
     this.handlePositiveNegativeNumberChange = this.handlePositiveNegativeNumberChange.bind(this)
-    this.handleMPlus = this.handleMPlus.bind(this)
+    this.handleMemoryOperations = this.handleMemoryOperations.bind(this)
   
   }
 
@@ -29,7 +29,7 @@ class Calculator extends Component {
   handleNumberClick(event) {
     const { name, value } = event.target
     this.setState(prevState => {
-      if (prevState.result === "0") {
+      if (prevState.result === 0) {
         return ({
           [name]: value
         })
@@ -46,17 +46,26 @@ class Calculator extends Component {
   handleOperationSignClick(event) {
     event.preventDefault()
     const { name, value } = event.target
-    console.log("clicked")
 
     this.setState(prevState => {
       if (value === "2√") {
         return({
-          result: Math.sqrt(parseFloat(prevState.result)),
+          result: Math.sqrt(Number(prevState.result)),
           operationInput: ""
           })
       } else if (value === "3√") {
         return({
-          result: Math.cbrt(parseFloat(prevState.result)),
+          result: Math.cbrt(Number(prevState.result)),
+          operationInput: ""
+          })
+      } else if (value === "^2") {
+        return({
+          result: Number(prevState.result) ** 2,
+          operationInput: ""
+          })
+      } else if (value === "^3") {
+        return({
+          result: Number(prevState.result) ** 3,
           operationInput: ""
           })
       } else if (value === "1/n") {
@@ -64,10 +73,15 @@ class Calculator extends Component {
           result: 1 / prevState.result,
           operationInput: ""
           })
+      } else if (value === "log") {
+        return({
+          result: Math.log(prevState.result),
+          operationInput: ""
+          })
       } else {
         return ({
           operationInput: prevState.result,
-          result: '0',
+          result: 0,
           [name]: value
         })
       }
@@ -81,31 +95,31 @@ class Calculator extends Component {
     this.setState(prevState => {
       if (this.state.operation === "+") {
         return ({
-          result: parseFloat(prevState.result) + parseFloat(this.state.operationInput),
+          result: Number(prevState.result) + Number(this.state.operationInput),
           operationInput: "",
           operation: ""
         })
       } else if (this.state.operation === "-") {
         return ({
-          result: parseFloat(prevState.operationInput) - parseFloat(this.state.result),
+          result: Number(prevState.operationInput) - Number(this.state.result),
           operationInput: "",
           operation: ""
         })
       } else if (this.state.operation === "x") {
         return ({
-          result: parseFloat(prevState.result) * parseFloat(this.state.operationInput),
+          result: Number(prevState.result) * Number(this.state.operationInput),
           operationInput: "",
           operation: ""
         })
       } else if (this.state.operation === "/") {
         return ({
-          result: parseFloat(prevState.operationInput) / parseFloat(this.state.result),
+          result: Number(prevState.operationInput) / Number(this.state.result),
           operationInput: "",
           operation: ""
         })
       } else if (this.state.operation === "^") {
         return ({
-          result: parseFloat(prevState.operationInput) ** parseFloat(this.state.result),
+          result: Number(prevState.operationInput) ** Number(this.state.result),
           operationInput: "",
           operation: ""
         })
@@ -122,15 +136,17 @@ class Calculator extends Component {
   }
 
 
-  handleResetClick() {
+  handleResetClick(event) {
+    event.preventDefault()
+
     this.setState({
-      result: "0",
-      operationInput: "0",
+      result: 0,
+      operationInput: "",
       operation: ""
     })
   }
 
-  handleBackspaceClick(event) {
+  handleDelClick() {
     this.setState(prevState => {
       return({
         result: prevState.result.pop()
@@ -138,13 +154,39 @@ class Calculator extends Component {
     })
   }
 
-  handleMPlus(event) {
-    event.preventDefault()
+
+  handleMemoryOperations(event) {
+    const {value} = event.target
 
     this.setState(prevState => {
-      return({
-        memory: prevState.Memory + this.state.result
-      })
+      if (value === "MC") {
+        return({
+          memory: undefined
+        })
+      }
+      if (value === "MR") {
+        if (prevState.memory !== undefined) {
+          return({
+            result: prevState.memory
+          })
+        }
+        
+      }
+      if (value === "M+") {
+        return({
+          memory: prevState.memory + Number(this.state.result)
+        })
+      }
+      if (value === "M-") {
+        return({
+          memory: prevState.memory - Number(this.state.result)
+        })
+      }
+      if (value === "MS") {
+        return({
+          memory: Number(this.state.result)
+        })
+      }
     })
   }
 
@@ -170,14 +212,41 @@ class Calculator extends Component {
                 className="memory-button"
                 type="button"
                 name="memory"
+                value="MC"
+                onClick={this.handleMemoryOperations}
+                />
+              <input 
+                className="memory-button"
+                type="button"
+                name="memory"
+                value="MR"
+                onClick={this.handleMemoryOperations}
+                />
+              <input 
+                className="memory-button"
+                type="button"
+                name="memory"
                 value="M+"
-                onClick={this.handleMPlus}
+                onClick={this.handleMemoryOperations}
+                />
+              <input 
+                className="memory-button"
+                type="button"
+                name="memory"
+                value="M-"
+                onClick={this.handleMemoryOperations}
+                />
+              <input 
+                className="memory-button"
+                type="button"
+                name="memory"
+                value="MS"
+                onClick={this.handleMemoryOperations}
                 />
           </div>
 
-          <div className="top-part">
-            <button className="" onClick={this.handleResetClick}>C</button>
-            <button className="backspace" onClick={this.handleBackspaceClick}>Backspace</button>
+          <div className="top-section">
+
             <input
               className="operation"
               type="button"
@@ -218,11 +287,30 @@ class Calculator extends Component {
               className="operation"
               type="button"
               name="operation"
-              value="/"
+              value="n!"
               onClick={this.handleOperationSignClick} />
+            <input
+              className="operation"
+              type="button"
+              name="operation"
+              value="log"
+              onClick={this.handleOperationSignClick} />
+            <input
+              className="operation"
+              type="button"
+              name="operation"
+              value="π"
+              onClick={this.handleOperationSignClick} />
+            <input
+              className="operation"
+              type="button"
+              name="operation"
+              value="e"
+              onClick={this.handleOperationSignClick} />
+
           </div>
 
-          <div className="bottom-part">
+          <div className="bottom-section">
             <div className="numbers">
               <input
                 className="number-button"
@@ -299,12 +387,28 @@ class Calculator extends Component {
                 value="."
                 onClick={this.handleNumberClick} />
             </div>
-            <div className="operations">
+            <div className="basic-operations">
+              <input 
+                className="reset correction-button" 
+                type="button"
+                value="AC"
+                onClick={this.handleResetClick} />
+              <input 
+                className="del correction-button" 
+                type="button"
+                value="DEL"
+                onClick={this.handleDelClick} />
               <input
                 className="operation"
                 type="button"
                 name="operation"
-                value="-"
+                value="x"
+                onClick={this.handleOperationSignClick} />
+              <input
+                className="operation"
+                type="button"
+                name="operation"
+                value="/"
                 onClick={this.handleOperationSignClick} />
               <input
                 className="operation"
@@ -316,20 +420,17 @@ class Calculator extends Component {
                 className="operation"
                 type="button"
                 name="operation"
-                value="x"
+                value="-"
                 onClick={this.handleOperationSignClick} />
-              <button className="operation" onClick={this.handleEqualsSignClick}>=</button>
+              <input 
+                className="operation equals" 
+                type="button"
+                name="operation"
+                value="="
+                onClick={this.handleEqualsSignClick} />
             </div>
           </div>
         </form>
-        <div>
-          Memory: {memory} <br />
-          result: {result} <br />
-          operationInput: {operationInput} <br />
-          operation: {operation} <br />
-
-
-        </div>
       </div>
     )
   }

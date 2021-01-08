@@ -15,9 +15,15 @@ code {
 
 
 body, .root{
+  background: linear-gradient(
+    90deg, rgba(43,140,144,1) 0%, 
+    rgba(9,9,121,1) 50%, 
+    rgba(43,140,159,1) 100%
+  );
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 
 .calculator {
@@ -27,73 +33,113 @@ body, .root{
   justify-content: center;
   align-items: center;
   margin: 50px;
-  padding: 50px;
-  border-radius: 5px;
-  background-color: black;
+  padding: 80px;
+  border-radius: 50px;
+  background-color: rgb(12, 69, 95);
   color: white;
+
   .display {
-    width: 400px;
-    padding: 20px 20px;
+    width: 500px;
+    padding: 20px 30px;
     margin: 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     display:flex;
     flex-direction: column;
     justify-content: flex-end;
-    background-color: white;
-    color: black;
+    background-color: rgb(217, 231, 245);
+    color: rgb(0, 0, 0);
     font-size: 2rem;
+    
+    .operation-input {
+      font-size: 1.5rem;
+      height: 20px;
+    }
+    
     .result {
       border: none;
-      color: green;
-      font-size: 50px;
-      
+      font-size: 80px;
+      font-weight: 400;
+      letter-spacing: -4px;
+      align-items: center;
+      height: 100px;
+      overflow: hidden
     }
   
   }
-  .top-part {
-    width: 400px;
+
+  input {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 2px;
+    width: 96px;
+    border-radius: 30px;
+    font-size: 2rem;
+    border: none;
+  }
+
+  .memory-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:50px;
+    .memory-button {
+      margin: 5px 0 20px 0;
+      width: 80px;
+      font-size: 1.5rem;
+      padding: 10px;
+      background: none;
+      border: none;
+      color: inherit;
+    } 
+    input:hover {
+      border: 2px solid white
+    }
+  }
+
+  .top-section {
+    width: 500px;
+    height: 150px;
     input, button {
-      width: 25%;
-      height: 125px;
-      font-size: 20px;
-      border-radius: 5px;
-      background-color: grey;
+      height: 71px;
+      background-color: rgb(46, 47, 70);
       color:white;
     }
-    button:hover{
+    input:hover{
       background-color: white;
       color: black
     }
   }
-  .bottom-part {
+  .bottom-section {
     display: flex;
-    width: 400px;
+    width: 500px;
+    height: 500px;
       .numbers {
-        width: 75%;
-        height: 500px;
+        width: 60%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
         .number-button {
-          width: 33.3%;
           height: 25%;
-          font-size: 20px;
-          border-radius: 5px;
         }
         .number-button:hover {
           background-color: black;
           color: white;
         }
       }
-      .operations {
-        width: 25%;
+      .basic-operations {
+        width: 40%;
         display: flex;
-        flex-direction: column;
-        button, input {
+        flex-wrap: wrap;
+        input {
           background-color: grey;
           color: white;
-          font-size: 20px;
           height: 25%;
-          border-radius: 5px;
         }
-        button:hover{
+        .equals {
+          width: 100%;
+          background-color: rgb(28, 109, 230);
+        }
+
+        input:hover{
           background-color: white;
           color: black
         }

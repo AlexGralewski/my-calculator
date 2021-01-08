@@ -10,6 +10,8 @@ code {
 }
 
 body, .root {
+  background: -webkit-gradient(linear, left top, right top, from(#2b8c90), color-stop(50%, #090979), to(#2b8c9f));
+  background: linear-gradient(90deg, #2b8c90 0%, #090979 50%, #2b8c9f 100%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -19,6 +21,7 @@ body, .root {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  min-height: 100vh;
 }
 
 .calculator {
@@ -37,17 +40,17 @@ body, .root {
       -ms-flex-align: center;
           align-items: center;
   margin: 50px;
-  padding: 50px;
-  border-radius: 5px;
-  background-color: black;
+  padding: 80px;
+  border-radius: 50px;
+  background-color: #0c455f;
   color: white;
 }
 
 .calculator .display {
-  width: 400px;
-  padding: 20px 20px;
+  width: 500px;
+  padding: 20px 30px;
   margin: 20px;
-  border-radius: 10px;
+  border-radius: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -58,79 +61,130 @@ body, .root {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  background-color: white;
+  background-color: #d9e7f5;
   color: black;
   font-size: 2rem;
 }
 
+.calculator .display .operation-input {
+  font-size: 1.5rem;
+  height: 20px;
+}
+
 .calculator .display .result {
   border: none;
-  color: green;
-  font-size: 50px;
+  font-size: 80px;
+  font-weight: 400;
+  letter-spacing: -4px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100px;
+  overflow: hidden;
 }
 
-.calculator .top-part {
-  width: 400px;
+.calculator input {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin: 2px;
+  width: 96px;
+  border-radius: 30px;
+  font-size: 2rem;
+  border: none;
 }
 
-.calculator .top-part input, .calculator .top-part button {
-  width: 25%;
-  height: 125px;
-  font-size: 20px;
-  border-radius: 5px;
-  background-color: grey;
+.calculator .memory-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 50px;
+}
+
+.calculator .memory-buttons .memory-button {
+  margin: 5px 0 20px 0;
+  width: 80px;
+  font-size: 1.5rem;
+  padding: 10px;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+.calculator .memory-buttons input:hover {
+  border: 2px solid white;
+}
+
+.calculator .top-section {
+  width: 500px;
+  height: 150px;
+}
+
+.calculator .top-section input, .calculator .top-section button {
+  height: 71px;
+  background-color: #2e2f46;
   color: white;
 }
 
-.calculator .top-part button:hover {
+.calculator .top-section input:hover {
   background-color: white;
   color: black;
 }
 
-.calculator .bottom-part {
+.calculator .bottom-section {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 400px;
-}
-
-.calculator .bottom-part .numbers {
-  width: 75%;
+  width: 500px;
   height: 500px;
 }
 
-.calculator .bottom-part .numbers .number-button {
-  width: 33.3%;
-  height: 25%;
-  font-size: 20px;
-  border-radius: 5px;
+.calculator .bottom-section .numbers {
+  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.calculator .bottom-part .numbers .number-button:hover {
+.calculator .bottom-section .numbers .number-button {
+  height: 25%;
+}
+
+.calculator .bottom-section .numbers .number-button:hover {
   background-color: black;
   color: white;
 }
 
-.calculator .bottom-part .operations {
-  width: 25%;
+.calculator .bottom-section .basic-operations {
+  width: 40%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
-.calculator .bottom-part .operations button, .calculator .bottom-part .operations input {
+.calculator .bottom-section .basic-operations input {
   background-color: grey;
   color: white;
-  font-size: 20px;
   height: 25%;
-  border-radius: 5px;
 }
 
-.calculator .bottom-part .operations button:hover {
+.calculator .bottom-section .basic-operations .equals {
+  width: 100%;
+  background-color: #1c6de6;
+}
+
+.calculator .bottom-section .basic-operations input:hover {
   background-color: white;
   color: black;
 }
